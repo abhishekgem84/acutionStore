@@ -8,12 +8,15 @@ import java.util.stream.Collectors;
 
 import com.pckage.auctionStore.core.Bid;
 import com.pckage.auctionStore.core.Item;
+import com.pckage.auctionStore.core.Listner;
 
 public class AuctionManager {
 	private static AuctionManager auctionManager;
 	private static ConcurrentHashMap<Item, List<Bid>> bidManager;
+	private Listner listner=Listner.getInstance();
 
 	private AuctionManager() {
+		listner.startListner();
 		initAuction();
 	}
 
@@ -39,12 +42,14 @@ public class AuctionManager {
 				bid.setBidPrice(item.getItemBasePrice() + item.getItemBidIncrement());
 				bidList.add(bid);
 				bidManager.put(item, bidList);
+				listner.notifyUpdate(item, System.currentTimeMillis());
 				System.out.println("New Bidding List Created for Item"+item);
 			} else
 				System.out.println(String.format("Item code %s is already added to Bid Manager", item.getItemCode()));
 		} else {
 			bid.setBidPrice(getHighestBidPrice(item) + item.getItemBidIncrement());
 			bidManager.get(item).add(bid);
+			listner.notifyUpdate(item, System.currentTimeMillis());
 			System.out.println("Adding "+bid);
 		}
 	}

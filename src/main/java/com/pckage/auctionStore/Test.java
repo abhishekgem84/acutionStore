@@ -40,9 +40,27 @@ public class Test {
 			new Thread(()-> {
 				AuctionManager.getAuctionManager().addBid(item, new Bid(95));
 			}).start();
-			Thread.sleep(1000*5);
+			
+			final Item item1 =new Item(102, "Charger", "2.5v", 300, 20);
+			new Thread(()-> {
+				AuctionManager.getAuctionManager().addBid(item1, new Bid(99));
+			}).start();
+			new Thread(()-> {
+				AuctionManager.getAuctionManager().addBid(item1, new Bid(98));
+			}).start();
+			new Thread(()-> {
+				AuctionManager.getAuctionManager().addBid(item1, new Bid(97));
+			}).start();
+			new Thread(()-> {
+				AuctionManager.getAuctionManager().addBid(item1, new Bid(96));
+			}).start();
+			new Thread(()-> {
+				AuctionManager.getAuctionManager().addBid(item1, new Bid(95));
+			}).start();
+			
 			AuctionManager.getAuctionManager().listAllItemForBid();
-			System.out.println(String.format("Winner for Item %s is %s",item,AuctionManager.getAuctionManager().closeBiddingOnItem(item)));
+			Thread.sleep(1000*60);
+			//System.out.println(String.format("Winner for Item %s is %s",item,AuctionManager.getAuctionManager().closeBiddingOnItem(item)));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
